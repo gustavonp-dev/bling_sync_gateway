@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  gateway:
+    build: 
+      context: ./gateway
+      dockerfile: Dockerfile
+    container_name: php_gateway_service
+    ports:
+      - "8080:80"
+    volumes:
+      - ./gateway:/var/www/html
+    depends_on:
+      - mysql
+      - rabbitmq
+    environment:
+      DB_HOST: mysql
+      RABBITMQ_HOST: rabbitmq
+    networks:
+      - sync_gateway_network
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_database
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: bling_sync
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - sync_gateway_network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_service
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - sync_gateway_network
+
+networks:
+  sync_gateway_network:
+    driver: bridge
+
+volumes:
+  mysql_data:

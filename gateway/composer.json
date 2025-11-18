@@ -1,0 +1,16 @@
+{
+    "name": "gustavonunes/bling-sync",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Gustavonunes\\BlingSync\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gustavo Nunes Pereira"
+        }
+    ],
+    "require": {}
+}
