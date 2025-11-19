@@ -18,7 +18,8 @@ services:
       RABBITMQ_HOST: rabbitmq
     networks:
       - sync_gateway_network
-
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   mysql:
     image: mysql:8.0
     container_name: mysql_database
